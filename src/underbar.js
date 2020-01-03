@@ -173,11 +173,17 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-    for (let i = 0; i < collection.length; i++) {
+    let index = accumulator ? 0: 1;
+    accumulator = index === 1 ? collection[0]: accumulator;
 
+    for(let i = index; i < collection.length; i++) {
+      const postIt = iterator(accumulator, collection[i]);
+      accumulator = postIt === undefined ? accumulator: postIt;
     }
 
-    return accumulator
+
+
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
