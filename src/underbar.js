@@ -103,32 +103,20 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    let copy = array;
-    let result = new Set();
+    let results = [];
+    let visited = [];
 
-
-    if (!isSorted) {
-      copy.sort();
-    }
-    if (!iterator) {
-      for (let item of copy) {
-        result.add(item);
-      }
-    } else {
-      let transformed = []
-      for (let i = 0; i < copy.length; i++) {
-        transformed.push(iterator(copy[i]))
-
-        result.add(iterator());
-
+    if(!iterator) {
+      visited = new Set(array);
+      results = Array.from(visited);
+    } else if (isSorted && iterator) {
+      for (let i = 0; i < array.length; i++) {
+        let calcd = iterator(array[i]);
+        visited.includes(calcd) ? calcd: results.push(array[i])
+        visited.push(calcd);
       }
     }
-
-
-
-
-
-    return Array.from(result);
+    return results;
   };
 
 
