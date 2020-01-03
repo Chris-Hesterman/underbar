@@ -49,12 +49,18 @@
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
-
-      for (let i = 0; i < collection.length; i++) {
-        iterator(collection[i], i, collection);
+    if (Array.isArray(collection)) {
+      for (let index = 0; index < collection.length; index++) {
+        iterator(collection[index], index, collection);
       }
+    } else {
+      for (let item in collection) {
+        iterator(collection[item], item, collection);
+      }
+    }
+  }
 
-  };
+
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
@@ -75,6 +81,7 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+
   };
 
   // Return all elements of an array that don't pass a truth test.
