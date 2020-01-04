@@ -173,14 +173,19 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-    let index = accumulator ? 0: 1;
-    accumulator = index === 1 ? collection[0]: accumulator;
-
-    for(let i = index; i < collection.length; i++) {
-      const postIt = iterator(accumulator, collection[i]);
-      accumulator = postIt === undefined ? accumulator: postIt;
+    let index = 0;
+    if (collection.length < 2) {
+      return collection[0];
+    }
+    if (arguments.length < 3) {
+      accumulator = collection[0];
+      index = 1;
     }
 
+
+    for (let i = index; i < collection.length; i++) {
+      accumulator = iterator(accumulator, collection[i]);
+    }
 
 
     return accumulator;
