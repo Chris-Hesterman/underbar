@@ -110,13 +110,18 @@
       visited = new Set(array);
       results = Array.from(visited);
     } else if (isSorted && iterator) {
-      for (let i = 0; i < array.length; i++) {
-        let calcd = iterator(array[i]);
-        visited.includes(calcd) ? calcd: results.push(array[i])
+      _.each(array, function(item, index, array) {
+        let calcd = iterator(item);
+        visited.includes(calcd) ? calcd: results.push(item);
         visited.push(calcd);
-      }
+      });
     }
-
+    //below version is before using _.each()
+      // for (let i = 0; i < array.length; i++) {
+      //   let calcd = iterator(array[i]);
+      //   visited.includes(calcd) ? calcd: results.push(array[i])
+      //   visited.push(calcd);
+      // }
     return results;
   };
 
@@ -128,12 +133,13 @@
       let newItem = iterator(item);
       results.push(newItem);
     });
-    // let results = [];
-    // for (let i = 0; i < collection.length; i++) {
-    //   let change = iterator(collection[i]);
+    //below version before using _.each()
+      // let results = [];
+      // for (let i = 0; i < collection.length; i++) {
+      //   let change = iterator(collection[i]);
 
-    //   results.push(change);
-    // }
+      //   results.push(change);
+      // }
     return results;
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
