@@ -174,20 +174,14 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     let index = 0;
-    if (collection.length < 2) {
-      return collection[0];
-    }
-    if (arguments.length < 3) {
+
+    if (accumulator === undefined) {
       accumulator = collection[0];
       index = 1;
     }
-
-
     for (let i = index; i < collection.length; i++) {
       accumulator = iterator(accumulator, collection[i]);
     }
-
-
     return accumulator;
   };
 
