@@ -60,8 +60,6 @@
     }
   }
 
-
-
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
@@ -85,6 +83,7 @@
     for (let item of collection) {
       if (test(item)) result.push(item);
     };
+
     return result;
   };
 
@@ -96,6 +95,7 @@
     for (let item of collection) {
       if (!opposite.includes(item)) results.push(item);
     }
+
     return results;
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
@@ -116,6 +116,7 @@
         visited.push(calcd);
       }
     }
+
     return results;
   };
 
@@ -123,11 +124,16 @@
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     let results = [];
-    for (let i = 0; i < collection.length; i++) {
-      let change = iterator(collection[i]);
+    _.each(collection, function(item) {
+      let newItem = iterator(item);
+      results.push(newItem);
+    });
+    // let results = [];
+    // for (let i = 0; i < collection.length; i++) {
+    //   let change = iterator(collection[i]);
 
-      results.push(change);
-    }
+    //   results.push(change);
+    // }
     return results;
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
@@ -182,6 +188,7 @@
     for (let i = index; i < collection.length; i++) {
       accumulator = iterator(accumulator, collection[i]);
     }
+
     return accumulator;
   };
 
