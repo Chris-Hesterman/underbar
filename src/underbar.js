@@ -202,10 +202,20 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
+    if (!collection.length) {
+      let objArr = [];
+      for (let prop in collection) {
+        objArr.push(collection[prop]);
+      }
+      collection = objArr;
+    }
+
     return _.reduce(collection, function(wasFound, item) {
+
       if (wasFound) {
         return true;
       }
+
       return item === target;
     }, false);
   };
