@@ -368,6 +368,21 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    let shuffled = [];
+
+    while (shuffled.length < array.length) {
+      let index = Math.floor(Math.random() * array.length);
+      let sample = array[index];
+
+      if (!_.contains(shuffled, index)) {
+        shuffled.push(index);
+      }
+    }
+    let results = _.map(shuffled, function(item) {
+      return array[item];
+    });
+
+    return results;
   };
 
 
