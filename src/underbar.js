@@ -39,6 +39,7 @@
   // last element.
   _.last = function(array, n) {
     const length = array.length;
+
     if (n > length) return array;
     return n === undefined ? array[length - 1] : array.slice(length - n);
   };
@@ -79,7 +80,8 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
-    let result = [];
+    const result = [];
+
     for (let item of collection) {
       if (test(item)) result.push(item);
     };
@@ -89,8 +91,8 @@
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
-    let results = [];
-    let opposite = _.filter(collection, test);
+    const results = [];
+    const opposite = _.filter(collection, test);
 
     for (let item of collection) {
       if (!opposite.includes(item)) results.push(item);
@@ -111,7 +113,7 @@
       results = Array.from(visited);
     } else if (isSorted && iterator) {
       _.each(array, function(item, index, array) {
-        let calcd = iterator(item);
+        const calcd = iterator(item);
         visited.includes(calcd) ? calcd: results.push(item);
         visited.push(calcd);
       });
@@ -127,24 +129,28 @@
 
 
   // Return the results of applying an iterator to each element.
+   //below is my first version before using _.each() - CH
+      // const results = [];
+      // for (let i = 0; i < collection.length; i++) {
+      //   let change = iterator(collection[i]);
+      //   results.push(change);
+      // }
+
+    // map() is a useful primitive iteration function that works a lot
+    // like each(), but in addition to running the operation on all
+    // the members, it also maintains an array of results.
   _.map = function(collection, iterator) {
-    let results = [];
+    const results = [];
+
     _.each(collection, function(item) {
       let newItem = iterator(item);
       results.push(newItem);
     });
-    //below version before using _.each()
-      // let results = [];
-      // for (let i = 0; i < collection.length; i++) {
-      //   let change = iterator(collection[i]);
 
-      //   results.push(change);
-      // }
     return results;
-    // map() is a useful primitive iteration function that works a lot
-    // like each(), but in addition to running the operation on all
-    // the members, it also maintains an array of results.
   };
+
+
 
   /*
    * TIP: map is really handy when you want to transform an array of
@@ -203,7 +209,7 @@
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
     if (!collection.length) {
-      let objArr = [];
+      const objArr = [];
       for (let prop in collection) {
         objArr.push(collection[prop]);
       }
@@ -349,7 +355,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-    let args = Array.prototype.slice.call(arguments, 2);
+    const args = Array.prototype.slice.call(arguments, 2);
 
     setTimeout(function() {
       func.apply(null, args);
@@ -367,17 +373,17 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    let shuffled = [];
+    const shuffled = [];
 
     while (shuffled.length < array.length) {
-      let index = Math.floor(Math.random() * array.length);
-      let sample = array[index];
+      const index = Math.floor(Math.random() * array.length);
+      const sample = array[index];
 
       if (!_.contains(shuffled, index)) {
         shuffled.push(index);
       }
     }
-    let results = _.map(shuffled, function(item) {
+    const results = _.map(shuffled, function(item) {
       return array[item];
     });
 
@@ -437,15 +443,15 @@
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
     let longest = [];
-    let result = [];
-    let args = Object.values(arguments);
+    const result = [];
+    const args = Object.values(arguments);
 
     _.each(args, function(arg) {
       longest = arg.length > longest.length ? arg: longest;
     });
     _.each(longest, function(item, index) {
-      let tempArr = [];
-      let i = index;
+      const tempArr = [];
+      const i = index;
 
       _.each(args, function(arg) {
         tempArr.push(arg[i])
@@ -461,7 +467,7 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
-    let flat = [];
+    const flat = [];
 
     const iterator = function(array) {
       _.each(array, function(item) {
@@ -482,7 +488,7 @@
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
     const argsArr = Object.values(arguments);
-    let results = [];
+    const results = [];
     const argsSet = new Set(_.flatten(argsArr));
     const allItems = Array.from(argsSet);
 
@@ -500,6 +506,15 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    const argsArr = Array.from(arguments);
+    const args = _.flatten(argsArr.slice(1));
+    const result = [];
+
+    _.each(argsArr[0], function(item) {
+      if (!_.contains(args, item)) result.push(item);
+    });
+
+    return result;
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
