@@ -421,12 +421,12 @@
       result = collection.sort(function(a, b) {
         return a[iterator] - (b[iterator]);
       });
-      console.log(result);
     } else {
       result = collection.sort(function(a, b) {
         return iterator(a) - iterator(b);
       });
     }
+
     return result ;
   };
 
@@ -443,7 +443,23 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
-  };
+    let flat = [];
+
+    const iterator = function(array) {
+      _.each(array, function(item) {
+        if (Array.isArray(item)) {
+          iterator(item);
+        } else {
+          flat.push(item);
+        }
+      });
+    }
+    iterator(nestedArray)
+    console.log(flat);
+
+    return flat;
+  }
+
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
