@@ -436,6 +436,23 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    let longest = 0;
+    let result = [];
+    let args = Object.values(arguments);
+
+    for (let arg of args) {
+      longest = arg.length > longest ? arg.length: longest;
+    }
+    for (let i = 0; i < longest; i++) {
+      let tempArr = [];
+
+      _.each(args, function(arg) {
+        tempArr.push(arg[i])
+      });
+      result.push(tempArr);
+    }
+
+    return result;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
@@ -455,7 +472,6 @@
       });
     }
     iterator(nestedArray)
-    console.log(flat);
 
     return flat;
   }
