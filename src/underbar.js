@@ -436,21 +436,22 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
-    let longest = 0;
+    let longest = [];
     let result = [];
     let args = Object.values(arguments);
 
-    for (let arg of args) {
-      longest = arg.length > longest ? arg.length: longest;
-    }
-    for (let i = 0; i < longest; i++) {
+    _.each(args, function(arg) {
+      longest = arg.length > longest.length ? arg: longest;
+    });
+    _.each(longest, function(item, index) {
       let tempArr = [];
+      let i = index;
 
       _.each(args, function(arg) {
         tempArr.push(arg[i])
       });
       result.push(tempArr);
-    }
+    });
 
     return result;
   };
