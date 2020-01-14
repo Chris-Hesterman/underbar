@@ -523,5 +523,13 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+    let release = true;
+    setInterval(function() {
+      release = !release;
+      console.log(release);
+    }, wait);
+    return function() {
+      if (release) return func();
+    }
   };
 }());
