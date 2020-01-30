@@ -59,11 +59,11 @@
         iterator(collection[item], item, collection);
       }
     }
-  }
+  };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
-  _.indexOf = function(array, target){
+  _.indexOf = function(array, target) {
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
@@ -83,8 +83,10 @@
     const result = [];
 
     for (let item of collection) {
-      if (test(item)) result.push(item);
-    };
+      if (test(item)) {
+        result.push(item);
+      }
+    }
 
     return result;
   };
@@ -95,7 +97,9 @@
     const opposite = _.filter(collection, test);
 
     for (let item of collection) {
-      if (!opposite.includes(item)) results.push(item);
+      if (!opposite.includes(item)) {
+        results.push(item);
+      }
     }
 
     return results;
@@ -108,37 +112,36 @@
     let results = [];
     let visited = [];
 
-    if(!iterator) {
+    if (!iterator) {
       visited = new Set(array);
       results = Array.from(visited);
     } else if (isSorted && iterator) {
       _.each(array, function(item, index, array) {
         const calcd = iterator(item);
-        visited.includes(calcd) ? calcd: results.push(item);
+        visited.includes(calcd) ? calcd : results.push(item);
         visited.push(calcd);
       });
     }
     //below version is before using _.each()
-      // for (let i = 0; i < array.length; i++) {
-      //   let calcd = iterator(array[i]);
-      //   visited.includes(calcd) ? calcd: results.push(array[i])
-      //   visited.push(calcd);
-      // }
+    // for (let i = 0; i < array.length; i++) {
+    //   let calcd = iterator(array[i]);
+    //   visited.includes(calcd) ? calcd: results.push(array[i])
+    //   visited.push(calcd);
+    // }
     return results;
   };
 
-
   // Return the results of applying an iterator to each element.
-   //below is my first version before using _.each() - CH
-      // const results = [];
-      // for (let i = 0; i < collection.length; i++) {
-      //   let change = iterator(collection[i]);
-      //   results.push(change);
-      // }
+  //below is my first version before using _.each() - CH
+  // const results = [];
+  // for (let i = 0; i < collection.length; i++) {
+  //   let change = iterator(collection[i]);
+  //   results.push(change);
+  // }
 
-    // map() is a useful primitive iteration function that works a lot
-    // like each(), but in addition to running the operation on all
-    // the members, it also maintains an array of results.
+  // map() is a useful primitive iteration function that works a lot
+  // like each(), but in addition to running the operation on all
+  // the members, it also maintains an array of results.
   _.map = function(collection, iterator) {
     const results = [];
 
@@ -149,8 +152,6 @@
 
     return results;
   };
-
-
 
   /*
    * TIP: map is really handy when you want to transform an array of
@@ -165,7 +166,7 @@
     // TIP: map is really handy when you want to transform an array of
     // values into a new array of values. _.pluck() is solved for you
     // as an example of this.
-    return _.map(collection, function(item){
+    return _.map(collection, function(item) {
       return item[key];
     });
   };
@@ -216,24 +217,33 @@
       collection = objArr;
     }
 
-    return _.reduce(collection, function(wasFound, item) {
-      if (wasFound) {
-        return true;
-      }
-      return item === target;
-    }, false);
+    return _.reduce(
+      collection,
+      function(wasFound, item) {
+        if (wasFound) {
+          return true;
+        }
+        return item === target;
+      },
+      false
+    );
   };
-
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    return _.reduce(collection, function(isMatch, item) {
-      if (!isMatch) return false;
-      if (!iterator) {
-        return !!item;
-      }
-      return !!iterator(item) === true;
-    }, true)
+    return _.reduce(
+      collection,
+      function(isMatch, item) {
+        if (!isMatch) {
+          return false;
+        }
+        if (!iterator) {
+          return !!item;
+        }
+        return !!iterator(item) === true;
+      },
+      true
+    );
     // TIP: Try re-using reduce() here.
   };
 
@@ -243,7 +253,9 @@
     //let every = _.every(collection, iterator);
 
     for (let item of collection) {
-      if (!iterator) return !!item === true;
+      if (!iterator) {
+        return !!item === true;
+      }
       if (iterator(item)) {
         return true;
       }
@@ -251,7 +263,6 @@
     return false;
     //TIP: There's a very clever way to re-use every() here.
   };
-
 
   /**
    * OBJECTS
@@ -292,7 +303,6 @@
     }
     return obj;
   };
-
 
   /**
    * FUNCTIONS
@@ -343,9 +353,9 @@
       } else {
         const val = func.apply(null, arguments);
         store[key] = val;
-        return val
+        return val;
       }
-    }
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -359,7 +369,7 @@
 
     setTimeout(function() {
       func.apply(null, args);
-    }, wait)
+    }, wait);
   };
 
   /**
@@ -390,7 +400,6 @@
     return results;
   };
 
-
   /**
    * ADVANCED
    * =================
@@ -411,7 +420,7 @@
     } else {
       result = _.map(collection, function(item) {
         return String.prototype[functionOrKey].call(item);
-      })
+      });
     }
 
     return result;
@@ -425,7 +434,7 @@
     let result;
     if (typeof iterator === 'string') {
       result = collection.sort(function(a, b) {
-        return a[iterator] - (b[iterator]);
+        return a[iterator] - b[iterator];
       });
     } else {
       result = collection.sort(function(a, b) {
@@ -433,7 +442,7 @@
       });
     }
 
-    return result ;
+    return result;
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -447,14 +456,14 @@
     const args = Object.values(arguments);
 
     _.each(args, function(arg) {
-      longest = arg.length > longest.length ? arg: longest;
+      longest = arg.length > longest.length ? arg : longest;
     });
     _.each(longest, function(item, index) {
       const tempArr = [];
       const i = index;
 
       _.each(args, function(arg) {
-        tempArr.push(arg[i])
+        tempArr.push(arg[i]);
       });
       result.push(tempArr);
     });
@@ -477,12 +486,11 @@
           flat.push(item);
         }
       });
-    }
-    iterator(nestedArray)
+    };
+    iterator(nestedArray);
 
     return flat;
-  }
-
+  };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
@@ -495,9 +503,11 @@
     _.each(allItems, function(item) {
       const shared = _.every(argsArr, function(arg) {
         return _.indexOf(arg, item) !== -1;
-        });
+      });
 
-      if (shared) results.push(item);
+      if (shared) {
+        results.push(item);
+      }
     });
 
     return results;
@@ -511,7 +521,9 @@
     const result = [];
 
     _.each(argsArr[0], function(item) {
-      if (!_.contains(args, item)) result.push(item);
+      if (!_.contains(args, item)) {
+        result.push(item);
+      }
     });
 
     return result;
@@ -524,12 +536,15 @@
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
     let release = true;
+
     setInterval(function() {
       release = !release;
-      console.log(release);
     }, wait);
+
     return function() {
-      if (release) return func();
-    }
+      if (release) {
+        return func();
+      }
+    };
   };
-}());
+})();
